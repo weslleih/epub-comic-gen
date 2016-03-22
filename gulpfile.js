@@ -12,10 +12,9 @@ gulp.task('exemple', function() {
             "Haruko.epub",
             "Haruko San No Kareshi",
             "Kuratsuka Riko",
-            "ja-jp",
-            "3.0"
+            "ja-jp"
         );
-        epub.convert(function(err,file){
+        epub.convert("3.0", function(err,file){
             if(err) throw(err);
         })
     })

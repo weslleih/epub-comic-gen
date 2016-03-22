@@ -33,9 +33,8 @@ describe('mocha test', function() {
             "Haruko San No Kareshi",
             "Kuratsuka Riko",
             "ja-jp",
-            "3.0"
         );
-        epub.convert(function(err,file){
+        epub.convert("3.0", function(err,file){
             if(err) return done(err);
             done();
         })

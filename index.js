@@ -8,13 +8,12 @@ var mime = require('mime-types');
 var sizeOf = require('image-size');
 
 class Epub {
-    constructor(inPath, epubPath, epubFile, title, author, lang, version) {
+    constructor(inPath, epubPath, epubFile, title, author, lang) {
         this.inPath = path.normalize(inPath)+"/";
         this.epubPath = path.normalize(epubPath)+"/";
         this.epubFile = epubFile;
         this.date = new Date();
         this.archive = new Packer();
-        this.modelPath = "templates/"+version+"/"
         this.model = JSON.parse(fs.readFileSync(this.modelPath+"model.json",'utf8'));
 
         lang = lang || "en-us";
@@ -30,8 +29,10 @@ class Epub {
             "images" : [],
         }
     }
-    convert(callback){
+    convert(version, callback){
         var self = this;
+        
+        this.modelPath = "templates/"+version+"/"
         //Calback executed at the end of the process or in case of failure
         self.returnCallback = callback;
 
