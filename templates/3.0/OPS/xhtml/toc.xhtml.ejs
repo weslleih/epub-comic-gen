@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.idpf.org/epub/30/schema/epub-nav-30.rnc" type="application/relax-ng-compact-syntax"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <title><%= title %></title>
+    <link href="../css/default.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body epub:type="frontmatter">
+    <header>
+      <h1>Table of Contents</h1>
+    </header>
+    <nav epub:type="toc" id="toc">
+      <ol>
+        <li epub:type="chapter" id="toc-01">
+          <a href="<%= pages[0] %>"><%= title %></a>
+        </li>
+      </ol>
+    </nav>
+    <nav epub:type="page-list">
+      <ol>
+          <% for (var i = 0; i < pages.length; i++ ) { %>
+          <li>
+            <a href="<%= pages[i]  %>"><%= i+1  %></a>
+          </li>
+          <% } %>
+      </ol>
+    </nav>
+  </body>
+</html>

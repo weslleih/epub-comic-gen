@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+  xmlns:epub="http://www.idpf.org/2007/ops"
+  xml:lang="<%= lang1 %>">
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=<%= image.width %>, height=<%= image.height %>"/>
+  </head>
+  <body epub:type="bodymatter">
+    <img src="../images/<%= image.file %>" alt="<%= title+' '+image.page %>"/>
+  </body>
+</html>

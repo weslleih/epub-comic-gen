@@ -1,0 +1,36 @@
+{
+  "name": "epub-comic-gen",
+  "version": "0.0.1",
+  "description": "Npm package to create comics epub v3 books",
+  "main": "disct/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weslleih/epub-comic-gen.git"
+  },
+  "keywords": [
+    "ebook",
+    "epub3",
+    "epub",
+    "comic"
+  ],
+  "author": "wesllei Henrique <wesllei.h@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weslleih/epub-comic-gen/issues"
+  },
+  "homepage": "https://github.com/weslleih/epub-comic-gen#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "archiver-utils": "^0.3.0",
+    "compress-commons": "^0.4.2",
+    "ejs": "^2.4.1",
+    "image-size": "^0.4.0",
+    "mime-types": "^2.1.10",
+    "zip-stream": "^0.8.0"
+  }
+}
