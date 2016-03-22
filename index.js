@@ -8,7 +8,7 @@ var mime = require('mime-types');
 var sizeOf = require('image-size');
 
 class Epub {
-    constructor(inPath, epubPath, epubFile, version, title, author, lang) {
+    constructor(inPath, epubPath, epubFile, title, author, lang, version) {
         this.inPath = path.normalize(inPath)+"/";
         this.epubPath = path.normalize(epubPath)+"/";
         this.epubFile = epubFile;
@@ -17,7 +17,7 @@ class Epub {
         this.modelPath = "templates/"+version+"/"
         this.model = JSON.parse(fs.readFileSync(this.modelPath+"model.json",'utf8'));
 
-        larg = lang || "en-us";
+        lang = lang || "en-us";
         title = title || epubFile.replace('.epub','');
         author = author || "Anonymous";
         this.data = {
@@ -40,7 +40,7 @@ class Epub {
             if(err){
                 self.returnCallback(err, null)
             }else if(files.length < 1){
-                self.returnCallback("No files selected", null)
+                self.returnCallback(new Error("No files selected"), null)
             }else{
                 var page = 1;
                 for( var i = 0; i < files.length; i++){
@@ -58,7 +58,7 @@ class Epub {
                     }
                 }
                 if(self.data.images.length < 1){
-                    self.returnCallback("The files are not supported!", null);
+                    self.returnCallback(new Error("The files are not supported!"), null);
                 }else{
                     self.createStream();
                     self.insertLoo("static", 0, 0);
@@ -152,7 +152,7 @@ class Epub {
                 break;
             default:
                 self.archive.finish();
-                self.returnCallback("Unknown error", null)
+                self.returnCallback(new Error("Unknown error"), null)
                 return;
         }
 
