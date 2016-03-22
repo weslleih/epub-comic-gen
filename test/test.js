@@ -30,10 +30,10 @@ describe('mocha test', function() {
             inPath,
             "test",
             epubFile,
-            "3.0",
             "Haruko San No Kareshi",
             "Kuratsuka Riko",
-            "ja-jp"
+            "ja-jp",
+            "3.0"
         );
         epub.convert(function(err,file){
             if(err) return done(err);
