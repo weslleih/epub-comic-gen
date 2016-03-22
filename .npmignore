@@ -2,3 +2,7 @@
 exemple
 # Gulp File
 gulpfile.js
+# Test directory
+test
+# Travis File
+.travis.yml
