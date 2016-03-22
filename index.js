@@ -14,7 +14,6 @@ class Epub {
         this.epubFile = epubFile;
         this.date = new Date();
         this.archive = new Packer();
-        this.model = JSON.parse(fs.readFileSync(this.modelPath+"model.json",'utf8'));
 
         lang = lang || "en-us";
         title = title || epubFile.replace('.epub','');
@@ -31,8 +30,9 @@ class Epub {
     }
     convert(version, callback){
         var self = this;
-        
-        this.modelPath = "templates/"+version+"/"
+
+        this.modelPath = "templates/"+version+"/";
+        this.model = JSON.parse(fs.readFileSync(this.modelPath+"model.json",'utf8'));
         //Calback executed at the end of the process or in case of failure
         self.returnCallback = callback;
 
