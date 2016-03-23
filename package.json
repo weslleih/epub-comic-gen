@@ -1,6 +1,6 @@
 {
   "name": "epub-comic-gen",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Npm package to create comics epub books",
   "main": "index.js",
   "scripts": {
