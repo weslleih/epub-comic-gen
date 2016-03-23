@@ -17,7 +17,8 @@ var epub = new Epub(
     'Haruko.pub',
     'Haruko San No Kareshi',
     'Kuratsuka Riko',
-    'ja-jp'
+    'ja-jp',
+    'rtl'
 );
 epub.genrate("3.0", function(err, file){
     if(err) return throw err;

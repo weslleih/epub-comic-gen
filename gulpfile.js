@@ -12,7 +12,8 @@ gulp.task('exemple', function() {
             "Haruko.epub",
             "Haruko San No Kareshi",
             "Kuratsuka Riko",
-            "ja-jp"
+            "ja-jp",
+            "rtl"
         );
         epub.convert("3.0", function(err,file){
             if(err) throw(err);
@@ -23,11 +24,6 @@ gulp.task('exemple', function() {
 gulp.task('mocha', function () {
   return gulp.src('test/*.js')
     .pipe(mocha());
-});
-
-gulp.task('npm', function (done) {
-  require('child_process').spawn('npm', ['publish'], { stdio: 'inherit' })
-    .on('close', done);
 });
 
 gulp.task('default', ['exemple']);

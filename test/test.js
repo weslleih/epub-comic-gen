@@ -28,11 +28,12 @@ describe('mocha test', function() {
     it('create epub 3 with all parameters', function(done){
         var epub = new Epub(
             inPath,
-            "test",
+            'test',
             epubFile,
-            "Haruko San No Kareshi",
-            "Kuratsuka Riko",
-            "ja-jp"
+            'Haruko San No Kareshi',
+            'Kuratsuka Riko',
+            'ja-jp',
+            'rtl'
         );
         epub.convert("3.0", function(err,file){
             if(err) return done(err);

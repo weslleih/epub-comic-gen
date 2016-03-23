@@ -8,7 +8,7 @@ var mime = require('mime-types');
 var sizeOf = require('image-size');
 
 class Epub {
-    constructor(inPath, epubPath, epubFile, title, author, lang) {
+    constructor(inPath, epubPath, epubFile, title, author, lang, direction) {
         this.inPath = path.normalize(inPath)+"/";
         this.epubPath = path.normalize(epubPath)+"/";
         this.epubFile = epubFile;
@@ -18,6 +18,8 @@ class Epub {
         lang = lang || "en-us";
         title = title || epubFile.replace('.epub','');
         author = author || "Anonymous";
+        direction = direction || "ltr";
+
         this.data = {
             "uuid" : this.generatUuid(),
             "title" : title,
@@ -26,10 +28,14 @@ class Epub {
             "lang2" : lang,
             "date" : this.date.toISOString().slice(0, 19)+'Z',
             "images" : [],
+            "direction" : direction
         }
     }
-    convert(version, callback){
+    convert(param1, param2){
         var self = this;
+
+        var version = (typeof param1 == 'function')?"3.0":param1;
+        var callback = (typeof param1 == 'function')?param1:param2;
 
         this.modelPath = "templates/"+version+"/";
         this.model = JSON.parse(fs.readFileSync(this.modelPath+"model.json",'utf8'));
