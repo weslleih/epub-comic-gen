@@ -28,7 +28,7 @@ epub.genrate("3.0", function(err, file){
 #### Epub(imagesFolder, destinationFolder, destinationFile *[, title, author, language, direction]* )
 Instantiates the object
 
-Requered
+Required
 - `imagesFolder` Path to images directory
 - `destinationFolder` Path to output directory
 - `destinationFile` Name of destination file, Ex. "Name.epub"
@@ -40,7 +40,7 @@ Optional
 - `direction` Base text direction, option "ltr" *left-to-right* or "rtl" *right-to-left* (default: "ltr")
 
 #### genrate(*[version,]* endCallback(err, file))
-Requered
+Required
 - `endCallback` Callback executed on end or in case of error
     * `err` the error message
     * `file` the name of file that was created
