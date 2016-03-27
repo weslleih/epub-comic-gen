@@ -1,33 +1,24 @@
 var mocha = require('mocha');
-var fs = require('fs.extra');
+var fs = require('fs');
 var Epub = require('../');
 
-var inPath = 'test/images';
+var comicFlder = 'exemples/haruko';
+var comicCbz = 'exemples/Haruko.cbz';
 var epubFile = 'Haruko.epub';
 
 describe('mocha test', function() {
-    before('copy files', function(done) {
-        fs.mkdirSync(inPath);
-        fs.copy('exemples/Haruko/01.jpg', inPath+'/01.jpg', { replace: true }, function (err) {
-            if (err) return done(err);
-            fs.copy('exemples/Haruko/02.jpg', inPath+'/02.jpg', { replace: true }, function (err) {
-                if (err) return done(err);
-                done();
-            });
-        });
+
+    afterEach(function(done){
+        var book = 'test/'+epubFile;
+        fs.access(book, function( err ) {
+            if(!err)fs.unlinkSync(book);
+            done();
+        })
     });
 
-    after(function() {
-        fs.rmrf(inPath);
-    });
-
-    afterEach(function(){
-        fs.unlinkSync('test/'+epubFile);
-    });
-
-    it('create epub 3 with all parameters', function(done){
+    it('create epub 3 with folder and all parameters', function(done){
         var epub = new Epub(
-            inPath,
+            comicFlder,
             'test',
             epubFile,
             'Haruko San No Kareshi',
@@ -35,7 +26,45 @@ describe('mocha test', function() {
             'ja-jp',
             'rtl'
         );
-        epub.convert("3.0", function(err,file){
+        epub.genrate("3.0", function(err,file){
+            if(err) return done(err);
+            done();
+        })
+    })
+
+    it('create epub 3 with folder and only 2 parameters', function(done){
+        var epub = new Epub(
+            comicFlder,
+            'test'
+        );
+        epub.genrate("3.0", function(err,file){
+            if(err) return done(err);
+            done();
+        })
+    })
+
+    it('create epub 3 with cbz and all parameters', function(done){
+        var epub = new Epub(
+            comicCbz,
+            'test',
+            epubFile,
+            'Haruko San No Kareshi',
+            'Kuratsuka Riko',
+            'ja-jp',
+            'rtl'
+        );
+        epub.genrate("3.0", function(err,file){
+            if(err) return done(err);
+            done();
+        })
+    })
+
+    it('create epub 3 with cbz and only 2 parameters', function(done){
+        var epub = new Epub(
+            comicCbz,
+            'test'
+        );
+        epub.genrate("3.0", function(err,file){
             if(err) return done(err);
             done();
         })

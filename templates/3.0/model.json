@@ -7,7 +7,7 @@
 	"interactives": [{
 		"interator": "pages",
 		"template": {
-			"path": "OPS/xhtml/",
+			"path": "OPS/xhtml",
 			"file": "page.xhtml.ejs"
 		}
 	}],
@@ -16,5 +16,5 @@
 		"OPS/xhtml/toc.ncx.ejs",
 		"OPS/xhtml/toc.xhtml.ejs"
 	],
-    "imagePath": "OPS/images/"
+    "imagePath": "OPS/images"
 }

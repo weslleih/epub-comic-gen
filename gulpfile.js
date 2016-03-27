@@ -15,7 +15,7 @@ gulp.task('exemple', function() {
             "ja-jp",
             "rtl"
         );
-        epub.convert("3.0", function(err,file){
+        epub.genrate("3.0", function(err,file){
             if(err) throw(err);
         })
     })
