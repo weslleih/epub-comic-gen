@@ -56,7 +56,7 @@ class Epub {
 
     /**
     * Starts the conversion of comic
-    * @param  {string} [version="3.0"] - The version of Epub to convert
+    * @param  {string} [param1="3.0"] - The version of Epub to convert
     * @param  {returnCallback} param2 - Callback executed at the end of the process
     */
     genrate(param1, param2){
