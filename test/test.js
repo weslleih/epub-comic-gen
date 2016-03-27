@@ -2,7 +2,7 @@ var mocha = require('mocha');
 var fs = require('fs');
 var Epub = require('../');
 
-var comicFlder = 'exemples/haruko';
+var comicFolder = 'exemples/Haruko';
 var comicCbz = 'exemples/Haruko.cbz';
 var epubFile = 'Haruko.epub';
 
@@ -18,7 +18,7 @@ describe('mocha test', function() {
 
     it('create epub 3 with folder and all parameters', function(done){
         var epub = new Epub(
-            comicFlder,
+            comicFolder,
             'test',
             epubFile,
             'Haruko San No Kareshi',
@@ -34,7 +34,7 @@ describe('mocha test', function() {
 
     it('create epub 3 with folder and only 2 parameters', function(done){
         var epub = new Epub(
-            comicFlder,
+            comicFolder,
             'test'
         );
         epub.genrate("3.0", function(err,file){
