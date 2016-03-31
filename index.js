@@ -6,7 +6,6 @@ var ejs = require('ejs');
 var Packer = require('zip-stream');
 var StreamZip = require('node-stream-zip');
 var mime = require('mime-types');
-var sizeOf = require('image-size');
 var ImageSizeStream = require('image-size-stream');
 
 var queue = require('queue');
@@ -16,7 +15,6 @@ var queue = require('queue');
 * This class represents the comic data
 */
 class Epub {
-
     /**
     * The comic basic data
     * @constructor
@@ -29,7 +27,6 @@ class Epub {
     * @param  {string} [direction="ltr"]       - Base text direction, options "ltr" left-to-right or "rtl" right-to-left (default: "ltr")
     */
     constructor(comic, destinationFolder , destinationFile, title, author, lang, direction) {
-
         this._comic = path.normalize(comic);
         let parse = path.parse(this._comic);
         this._destinationFolder  = destinationFolder?path.normalize( destinationFolder ): parse.dir;
@@ -56,14 +53,14 @@ class Epub {
 
     /**
     * Starts the conversion of comic
-    * @param  {string} [param1="3.0"] - The version of Epub to convert
+    * @param  {string} [version="3.0"] - The version of Epub to convert
     * @param  {returnCallback} param2 - Callback executed at the end of the process
     */
     genrate(param1, param2){
         var self = this;
 
         var version = (typeof param1 == 'function')?"3.0":param1;
-        this._modelPath = path.join("templates",version);
+        this._modelPath = path.join(__dirname,"templates",version);
         let jsonPath = path.join(this._modelPath,"model.json");
         this._model = JSON.parse(fs.readFileSync(jsonPath,'utf8'));
 
@@ -101,27 +98,34 @@ class Epub {
             }else if(files.length < 1){
                 self._callError(new Error("No files selected"));
             }else{
-                var page = 1;
+                var index = 0;
                 var q = queue();
                 q.concurrency = 1;
                 for( var i = 0; i < files.length; i++){
-                    let filePath = path.join(self._comic,files[i]);
-                    let mimeType = mime.lookup(filePath);
                     let image = files[i];
-                    if( mimeType == "image/jpeg" || mimeType == "image/png" ){
-                        let dimensions = sizeOf(filePath);
+                    let ext = path.extname(image);
+
+                    if(ext == ".jpg" || ext == ".png"){
                         self._data.images.push({
                             "file" : image,
-                            "mimeType" : mimeType,
-                            "width": dimensions.width,
-                            "height": dimensions.height,
-                            "page" : (page < 10)?0+page:page
+                            "page" : (index < 10)?0+index:index
                         })
-                        page++;
+                        let cIndex = index;
+                        index++;
                         q.push(function(cb) {
-                            var file = path.join(self._model.imagePath,image);
-                            var content = fs.createReadStream(filePath);
-                            self._archive.entry(content, { name: file , date: self._date}, function(err) {
+                            var name = path.join(self._model.imagePath,image);
+                            var content = fs.createReadStream(path.join(self._comic,image));
+                            var imageSizeStream = ImageSizeStream({limit:256*1024})
+                            .on('size', function(dimensions) {
+                                self._data.images[cIndex].mimeType =  mime.lookup(dimensions.type);
+                                self._data.images[cIndex].width = dimensions.width;
+                                self._data.images[cIndex].height = dimensions.height;
+                            })
+                            .on('error', function(err) {
+                                throw err;
+                            });
+                            content.pipe(imageSizeStream);
+                            self._archive.entry(content, { name: name , date: self._date}, function(err) {
                                 if ( err) self._callError(err);
                                 cb();
                             });
@@ -184,7 +188,6 @@ class Epub {
                             self._archive.entry(stream, { name: path.join(self._model.imagePath,name) , date: self._date}, function(err) {
                                 index++;
                                 if ( err) self._callError(err);
-                                //self._insertLoop(type, counter, imageCounter);
                                 cb();
                             });
                         });
@@ -193,7 +196,7 @@ class Epub {
             }
             q.start(function(err) {
                 if ( err) self._callError(err);
-                if(self._data.images.length<1){
+                if(self._data.images.length < 1){
                     self._callError("No images found");
                 }else{
                     self._insertInteractive(0, 0);
@@ -238,7 +241,8 @@ class Epub {
     */
     _insertImages(){
         var self = this;
-        if(fs.lstatSync(self._comic).isDirectory()){
+        var stats = fs.statSync(self._comic);
+        if(stats.isDirectory()){
             self._insertFromFolder();
         }else{
             self._insertFromCbz();
@@ -312,12 +316,13 @@ class Epub {
     * Delete the file generated if an error occurs during the process and calls the callback
     * @param  {Error} err - The error
     */
-    _callError(err){
+    _callError(error){
         var self = this;
         self._archive.finish();
-        fs.access(inPath, function( err ) {
-            if(!err) fs.unlinkSync(inPath);
-            self._returnCallback(err, null)
+        var tempFile = path.join(self._destinationFolder,self._destinationFile);
+        fs.access(tempFile, function( err ) {
+            if(!err) fs.unlinkSync(tempFile);
+            self._returnCallback(error, null)
         })
     }
 
