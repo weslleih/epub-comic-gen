@@ -9,11 +9,13 @@ var epubFile = 'Haruko.epub';
 describe('mocha test', function() {
 
     afterEach(function(done){
-        var book = 'test/'+epubFile;
-        fs.access(book, function( err ) {
-            if(!err)fs.unlinkSync(book);
-            done();
+      let book = 'test/'+epubFile;
+      fs.stat(book,function(err, stats){
+        fs.unlink(book, function(err){
+          if(err) return done(err);
+          return done();
         })
+      })
     });
 
     it('create epub 3 with folder and all parameters', function(done){
