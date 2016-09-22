@@ -5,25 +5,25 @@
     <title><%= title %></title>
     <link href="../css/default.css" rel="stylesheet" type="text/css" />
   </head>
-  <body epub:type="frontmatter">
-    <header>
+  <body>
+    <section class="frontmatter TableOfContents" epub:type="frontmatter toc">
       <h1>Table of Contents</h1>
-    </header>
-    <nav epub:type="toc" id="toc">
-      <ol>
-        <li epub:type="chapter" id="toc-01">
-          <a href="<%= pages[0] %>"><%= title %></a>
-        </li>
-      </ol>
-    </nav>
-    <nav epub:type="page-list">
-      <ol>
-          <% for (var i = 0; i < pages.length; i++ ) { %>
-          <li>
-            <a href="<%= pages[i]  %>"><%= i+1  %></a>
+      <nav epub:type="toc" id="toc">
+        <ol>
+          <li epub:type="chapter" id="toc-01">
+            <a href="<%= pages[0] %>"><%= title %></a>
           </li>
-          <% } %>
-      </ol>
-    </nav>
-  </body>
+        </ol>
+      </nav>
+      <nav epub:type="page-list">
+        <ol>
+          <% for (var i = 0; i < pages.length; i++ ) { %>
+            <li>
+              <a href="<%= pages[i]  %>"><%= i+1  %></a>
+            </li>
+            <% } %>
+          </ol>
+        </nav>
+      </section>
+    </body>
 </html>

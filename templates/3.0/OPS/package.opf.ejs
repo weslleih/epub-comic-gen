@@ -11,9 +11,12 @@
             <meta property="rendition:layout">pre-paginated</meta>
             <meta property="rendition:orientation">portrait</meta>
             <meta property="rendition:spread">landscape</meta>
+            <meta content="<%=  images[0].width %>x<%=  images[0].height %>" name="original-resolution"/>
+            <meta name="cover" content="cover_image"/>
       </metadata>
       <manifest>
             <item id="default-style" href="css/default.css" media-type="text/css"/>
+            <item id="cover_image" href="images/<%= images[0].file %>" media-type="<%= images[0].mimeType %>"/>
 
             <% for (var i = 0; i< images.length; i++ ) { %>
             <item id="j<%=  images[i].page %>" href="images/<%= images[i].file %>" media-type="<%= images[i].mimeType %>"/>
