@@ -9,7 +9,7 @@ var epubFile = 'Haruko.epub';
 describe('mocha test', function() {
 
     afterEach(function(done){
-      let book = 'test/'+epubFile;
+      var book = 'test/'+epubFile;
       fs.stat(book,function(err, stats){
         fs.unlink(book, function(err){
           if(err) return done(err);
